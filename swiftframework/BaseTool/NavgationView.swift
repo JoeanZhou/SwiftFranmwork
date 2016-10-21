@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class NavgationView: UIView {
 
@@ -14,7 +34,7 @@ class NavgationView: UIView {
     var rightView : [UIView]?
     var titleView : UIView?
     var titleColor : UIColor?
-    private var titleLable : UILabel = UILabel()
+    fileprivate var titleLable : UILabel = UILabel()
     
     /**
      设置自定义titleView
@@ -22,7 +42,7 @@ class NavgationView: UIView {
      - parameter titleView1: 自定义的View
      - return : 返回设置好的View
      */
-    func setCustomViewTitleView(titleView : UIView) -> UIView{
+    func setCustomViewTitleView(_ titleView : UIView) -> UIView{
        return customViewTitleView(titleView)
     }
     
@@ -31,7 +51,7 @@ class NavgationView: UIView {
      
      - parameter views: 装着View的数组
      */
-    func setCustomViewLeftViews(views : [UIView]){
+    func setCustomViewLeftViews(_ views : [UIView]){
         customViewLeftViews(views)
     }
     
@@ -40,7 +60,7 @@ class NavgationView: UIView {
      
      - parameter views: 装着View的数组
      */
-    func setCustomViewRightViews(views : [UIView]){
+    func setCustomViewRightViews(_ views : [UIView]){
         customViewRightViews(views)
     }
     
@@ -57,11 +77,11 @@ class NavgationView: UIView {
         }
     }
     
-    private var bgImageView : UIImageView?
+    fileprivate var bgImageView : UIImageView?
     override init(frame: CGRect) {
         super.init(frame: frame)
         bgImageView = UIImageView(frame: self.bounds)
-        bgImageView!.backgroundColor = UIColor.orangeColor()
+        bgImageView!.backgroundColor = UIColor.orange
         addSubview(bgImageView!)
     }
     
@@ -77,14 +97,14 @@ private let maginTop : CGFloat = 20
 private let maginLeft : CGFloat = 15
 extension NavgationView{
     
-    func customViewWithTitle(title : String){
-        titleLable.font = UIFont.systemFontOfSize(16.0)
+    func customViewWithTitle(_ title : String){
+        titleLable.font = UIFont.systemFont(ofSize: 16.0)
         titleLable.text = title
         if titleColor != nil{
             titleLable.textColor = titleColor;
         }
         else{
-            titleLable.textColor = UIColor.whiteColor()
+            titleLable.textColor = UIColor.white
         }
         var rc = self.bounds
         titleLable.sizeToFit()
@@ -106,7 +126,7 @@ extension NavgationView{
         addSubview(titleLable)
     }
     
-    private func customViewTitleView(titleView1 : UIView) -> UIView{
+    fileprivate func customViewTitleView(_ titleView1 : UIView) -> UIView{
         if titleView != nil{
             titleView?.removeFromSuperview()
         }
@@ -127,14 +147,14 @@ extension NavgationView{
             }
         }
         if leftMaxX > defaultX {
-            titleView?.frame = CGRectMake(leftMaxX, titleView!.frame.origin.y + maginTop, (self.frame.size.width - leftMaxX * 2), self.frame.size.height - maginTop)
+            titleView?.frame = CGRect(x: leftMaxX, y: titleView!.frame.origin.y + maginTop, width: (self.frame.size.width - leftMaxX * 2), height: self.frame.size.height - maginTop)
         }else{
-            titleView?.frame = CGRectMake(defaultX, titleView!.frame.origin.y + maginTop, (self.frame.size.width - defaultX * 2), self.frame.size.height - maginTop)
+            titleView?.frame = CGRect(x: defaultX, y: titleView!.frame.origin.y + maginTop, width: (self.frame.size.width - defaultX * 2), height: self.frame.size.height - maginTop)
         }
         return titleView!
     }
     
-    private func customViewLeftViews(views : [UIView]){
+    fileprivate func customViewLeftViews(_ views : [UIView]){
         
         if views.count == 0{
             return
@@ -155,13 +175,13 @@ extension NavgationView{
                 view.sizeToFit()
             }
             leftMaginX = (count == 0) ? maginLeft : (leftMaginX + lastView!.frame.size.width)
-            view.frame = CGRectMake(leftMaginX, view.frame.origin.y + maginTop, view.frame.size.width, self.frame.size.height - maginTop)
+            view.frame = CGRect(x: leftMaginX, y: view.frame.origin.y + maginTop, width: view.frame.size.width, height: self.frame.size.height - maginTop)
             lastView = view
             count += 1
         }
     }
     
-    private func customViewRightViews(views : [UIView]){
+    fileprivate func customViewRightViews(_ views : [UIView]){
         if views.count == 0{
             return
         }
@@ -186,7 +206,7 @@ extension NavgationView{
             }
             self.addSubview(view)
 
-            view.frame = CGRectMake(leftMaginX, view.frame.origin.y + maginTop, view.frame.size.width, self.frame.size.height - maginTop)
+            view.frame = CGRect(x: leftMaginX, y: view.frame.origin.y + maginTop, width: view.frame.size.width, height: self.frame.size.height - maginTop)
             count += 1
         }
     }

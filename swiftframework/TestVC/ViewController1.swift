@@ -12,18 +12,18 @@ class ViewController1: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.yellowColor()
+        view.backgroundColor = UIColor.yellow
         // Do any additional setup after loading the view.
-        let button : UIButton = UIButton(type: .Custom)
-        button.frame = CGRectMake(0, 0, 230, 50)
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        button.setTitle("这是自定义的View 点我啊", forState: .Normal)
-        button.addTarget(self, action:#selector(ViewController1.testPush), forControlEvents: .TouchUpInside)
-        button.backgroundColor = UIColor.redColor()
+        let button : UIButton = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 230, height: 50)
+        button.setTitleColor(UIColor.white, for: UIControlState())
+        button.setTitle("这是自定义的View 点我啊", for: UIControlState())
+        button.addTarget(self, action:#selector(ViewController1.testPush), for: .touchUpInside)
+        button.backgroundColor = UIColor.red
         navView?.setCustomViewTitleView(button)
         
-        let buttonLeft = UIButton(frame: CGRectMake(0, 0, 30, 30))
-        buttonLeft.setImage(UIImage(named: "tab_chance_pressed"), forState: .Normal)
+        let buttonLeft = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        buttonLeft.setImage(UIImage(named: "tab_chance_pressed"), for: UIControlState())
         navView?.setCustomViewLeftViews([buttonLeft])
     }
     

@@ -7,21 +7,41 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class NavBackButton: UIButton {
-    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
-        let image = self.imageForState(.Normal)
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+        let image = self.image(for: UIControlState())
         if (image != nil) {
             let height = image?.size.height
             let width = image?.size.width
-            let rc = CGRectMake(0, (contentRect.size.height - height!) / 2.0, width!, height!)
+            let rc = CGRect(x: 0, y: (contentRect.size.height - height!) / 2.0, width: width!, height: height!)
             return rc
         }
-        return super.imageRectForContentRect(contentRect)
+        return super.imageRect(forContentRect: contentRect)
     }
     
-    override func titleRectForContentRect(contentRect: CGRect) -> CGRect {
-        return CGRectMake(contentRect.origin.x + 2, contentRect.origin.y, contentRect.size.width, contentRect.size.height)
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
+        return CGRect(x: contentRect.origin.x + 2, y: contentRect.origin.y, width: contentRect.size.width, height: contentRect.size.height)
     }
 }
 
@@ -37,7 +57,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navView = NavgationView(frame: CGRectMake(0, 0, view.bounds.size.width, 64))
+        navView = NavgationView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 64))
         view.addSubview(navView!)
         
         addCustomBackButton()
@@ -51,18 +71,18 @@ class BaseViewController: UIViewController {
     }
     
     func getBackButton() -> UIButton{
-        let button = NavBackButton(type: .Custom)
-        button.setImage(UIImage(named: "icon_back"), forState: .Normal)
-        button.setTitle("返回", forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(16.0)
+        let button = NavBackButton(type: .custom)
+        button.setImage(UIImage(named: "icon_back"), for: UIControlState())
+        button.setTitle("返回", for: UIControlState())
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         button.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0)
-        button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        button.frame = CGRectMake(0, 0, 50, 50);
-        button.addTarget(self, action: #selector(BaseViewController.goBack(_:)), forControlEvents: .TouchUpInside)
+        button.setTitleColor(UIColor.white, for: UIControlState())
+        button.frame = CGRect(x: 0, y: 0, width: 50, height: 50);
+        button.addTarget(self, action: #selector(BaseViewController.goBack(_:)), for: .touchUpInside)
         return button
     }
     
-    func goBack(sender : UIButton){
-        navigationController?.popViewControllerAnimated(true)
+    func goBack(_ sender : UIButton){
+        navigationController?.popViewController(animated: true)
     }
 }

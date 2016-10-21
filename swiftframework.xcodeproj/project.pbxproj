@@ -237,15 +237,18 @@
 					92E0173C1CED4DD400B727F6 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = T7Z4FGR3YY;
+						LastSwiftMigration = 0800;
 					};
 					92E017501CED4DD500B727F6 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = T7Z4FGR3YY;
+						LastSwiftMigration = 0800;
 						TestTargetID = 92E0173C1CED4DD400B727F6;
 					};
 					92E0175B1CED4DD500B727F6 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = T7Z4FGR3YY;
+						LastSwiftMigration = 0800;
 						TestTargetID = 92E0173C1CED4DD400B727F6;
 					};
 				};
@@ -450,6 +453,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.scdoctor.swiftframework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -461,6 +465,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.scdoctor.swiftframework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -472,6 +477,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.scdoctor.swiftframeworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/swiftframework.app/swiftframework";
 			};
 			name = Debug;
@@ -484,6 +490,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.scdoctor.swiftframeworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/swiftframework.app/swiftframework";
 			};
 			name = Release;
@@ -495,6 +502,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.scdoctor.swiftframeworkUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = swiftframework;
 			};
 			name = Debug;
@@ -506,6 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.scdoctor.swiftframeworkUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = swiftframework;
 			};
 			name = Release;

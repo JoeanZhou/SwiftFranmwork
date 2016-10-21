@@ -12,7 +12,7 @@ class PushTestViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         self.navTitle = "这是push的控制器 你有种再点啊"
         navView?.setCustomViewRightViews([getBackButton()])
         

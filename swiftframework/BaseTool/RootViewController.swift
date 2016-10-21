@@ -10,7 +10,7 @@ import UIKit
 
 class RootViewController: BaseViewController, TabBarDelegate{
 
-    private let tabBarHeight : CGFloat = 50
+    fileprivate let tabBarHeight : CGFloat = 50
     var currentIndex : Int = 0
     var currentView : UIView?
     var vc1 : ViewController1 = ViewController1()
@@ -21,7 +21,7 @@ class RootViewController: BaseViewController, TabBarDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tabBarView : TabBarView = TabBarView(frame: CGRectMake(0, view.bounds.size.height - tabBarHeight, view.bounds.size.width, tabBarHeight))
+        let tabBarView : TabBarView = TabBarView(frame: CGRect(x: 0, y: view.bounds.size.height - tabBarHeight, width: view.bounds.size.width, height: tabBarHeight))
         tabBarView.delegate = self
         view.addSubview(tabBarView)
         tabBarView.setData(["首页", "发现", "圈子", "我"],
@@ -36,7 +36,7 @@ class RootViewController: BaseViewController, TabBarDelegate{
         showNewController(0)
     }
     
-    func tabBarDidselected(tabBar: TabBarView, index: Int) {
+    func tabBarDidselected(_ tabBar: TabBarView, index: Int) {
         if currentIndex == index {
             return
         }
@@ -50,10 +50,10 @@ class RootViewController: BaseViewController, TabBarDelegate{
     }
     
     
-    func showNewController(index : Int){
+    func showNewController(_ index : Int){
         if index < childViewControllers.count {
             let vc : UIViewController = childViewControllers[index]
-            vc.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - tabBarHeight - 0);
+            vc.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height - tabBarHeight - 0);
             currentView = vc.view;
             view.addSubview(vc.view)
         }

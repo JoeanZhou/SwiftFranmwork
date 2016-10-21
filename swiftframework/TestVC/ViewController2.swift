@@ -12,7 +12,7 @@ class ViewController2: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         // Do any additional setup after loading the view.
         navView?.navTitle = "我是谁"
     }

@@ -7,46 +7,66 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class TabBarButton: UIButton {
-    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
-        let image = self.imageForState(.Normal)
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+        let image = self.image(for: UIControlState())
         if (image != nil) {
             let height = image?.size.height
             let width = image?.size.width
-            let rc = CGRectMake((contentRect.size.width - width!) / 2.0, (contentRect.size.height - height! - 16.0) / 2.0, width!, height!)
+            let rc = CGRect(x: (contentRect.size.width - width!) / 2.0, y: (contentRect.size.height - height! - 16.0) / 2.0, width: width!, height: height!)
             return rc
         }
-        return super.imageRectForContentRect(contentRect)
+        return super.imageRect(forContentRect: contentRect)
     }
     
-    override func titleRectForContentRect(contentRect: CGRect) -> CGRect {
-        return CGRectMake(0.0, contentRect.size.height - 20.0, contentRect.size.width, 14.0)
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
+        return CGRect(x: 0.0, y: contentRect.size.height - 20.0, width: contentRect.size.width, height: 14.0)
     }
 }
 
 /**
  *  点击按钮的代理
  */
-protocol TabBarDelegate : NSPortDelegate{
-    func tabBarDidselected(tabBar : TabBarView, index : Int)
+protocol TabBarDelegate : PortDelegate{
+    func tabBarDidselected(_ tabBar : TabBarView, index : Int)
 }
 
 
 class TabBarView: UIView {
     weak var delegate : TabBarDelegate?
-    private var buttonArray : [TabBarButton]?
-    private var currentIndex : Int?
-    private var currentButton : TabBarButton?
-    private var iconArray : [String]?
-    private var iconHeighArray : [String]?
-    private var lineView : UIView = UIView()
+    fileprivate var buttonArray : [TabBarButton]?
+    fileprivate var currentIndex : Int?
+    fileprivate var currentButton : TabBarButton?
+    fileprivate var iconArray : [String]?
+    fileprivate var iconHeighArray : [String]?
+    fileprivate var lineView : UIView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = RGBColor(248.0, green: 248.0, blue: 248.0, alpha: 0.9)
-        lineView.backgroundColor = UIColor.lightGrayColor()
+        lineView.backgroundColor = UIColor.lightGray
         addSubview(lineView)
         buttonArray = Array()
     }
@@ -54,7 +74,7 @@ class TabBarView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         var rc = self.bounds
-        lineView.frame = CGRectMake(0, 0, rc.width, 1)
+        lineView.frame = CGRect(x: 0, y: 0, width: rc.width, height: 1)
         let buttonWidth = rc.size.width / CGFloat((buttonArray?.count)!)
         rc.size.width = buttonWidth
         for tabBarButton in buttonArray! {
@@ -77,27 +97,27 @@ extension TabBarView
      - parameter iconArray:      TabBar普通图片
      - parameter iconHeighArray: TabBar高亮文字
      */
-    func setData(titleArray : [String], iconArray : [String], iconHeighArray : [String]){
+    func setData(_ titleArray : [String], iconArray : [String], iconHeighArray : [String]){
         
         if titleArray.count != iconArray.count || titleArray.count != iconHeighArray.count {
             return;
         }
         self.iconArray = iconArray
         self.iconHeighArray = iconHeighArray
-        let rc = CGRectZero
+        let rc = CGRect.zero
         var tag = 0
         for title in titleArray {
-            let tabBarButton : TabBarButton = TabBarButton(type: .Custom)
+            let tabBarButton : TabBarButton = TabBarButton(type: .custom)
             tabBarButton.frame = rc
             if let iconImage = UIImage(named: iconArray[tag]){
-                tabBarButton.setImage(iconImage, forState: .Normal)
-                tabBarButton.setImage(iconImage, forState: .Highlighted)
+                tabBarButton.setImage(iconImage, for: UIControlState())
+                tabBarButton.setImage(iconImage, for: .highlighted)
             }
-            tabBarButton.setTitle(title, forState:.Normal)
-            tabBarButton.setTitleColor(RGBColor(138, green: 138, blue: 138, alpha: 1.0), forState:.Normal)
-            tabBarButton.addTarget(self, action: #selector(TabBarView.buttonPress(_:)), forControlEvents: .TouchUpInside)
-            tabBarButton.titleLabel?.font = UIFont.systemFontOfSize(10.0)
-            tabBarButton.titleLabel?.textAlignment = NSTextAlignment.Center
+            tabBarButton.setTitle(title, for:UIControlState())
+            tabBarButton.setTitleColor(RGBColor(138, green: 138, blue: 138, alpha: 1.0), for:UIControlState())
+            tabBarButton.addTarget(self, action: #selector(TabBarView.buttonPress(_:)), for: .touchUpInside)
+            tabBarButton.titleLabel?.font = UIFont.systemFont(ofSize: 10.0)
+            tabBarButton.titleLabel?.textAlignment = NSTextAlignment.center
             tabBarButton.tag = tag
             tag += 1
             buttonArray?.append(tabBarButton)
@@ -111,31 +131,31 @@ extension TabBarView
      
      - parameter index: 按钮的index
      */
-    func selectedButton(index : Int){
+    func selectedButton(_ index : Int){
         if index >= buttonArray?.count || index == currentIndex{
             return
         }
         if currentButton != nil {
-            currentButton!.setTitleColor(RGBColor(138, green: 138, blue: 138, alpha: 1.0), forState:.Normal)
+            currentButton!.setTitleColor(RGBColor(138, green: 138, blue: 138, alpha: 1.0), for:UIControlState())
             if currentIndex < buttonArray?.count {
                 if let iconImage = UIImage(named: iconArray![currentIndex!]) {
-                    currentButton?.setImage(iconImage, forState: .Normal)
-                    currentButton?.setImage(iconImage, forState: .Highlighted)
+                    currentButton?.setImage(iconImage, for: UIControlState())
+                    currentButton?.setImage(iconImage, for: .highlighted)
                 }
             }
         }
         currentIndex = index
         if currentIndex < buttonArray?.count {
             currentButton = buttonArray![currentIndex!]
-            currentButton?.setTitleColor(UIColor.blueColor(), forState: .Normal)
+            currentButton?.setTitleColor(UIColor.blue, for: UIControlState())
             if let iconImage = UIImage(named: iconHeighArray![currentIndex!]) {
-                currentButton?.setImage(iconImage, forState: .Normal)
-                currentButton?.setImage(iconImage, forState: .Highlighted)
+                currentButton?.setImage(iconImage, for: UIControlState())
+                currentButton?.setImage(iconImage, for: .highlighted)
             }
         }
     }
     
-    @objc private func buttonPress(button : UIButton){
+    @objc fileprivate func buttonPress(_ button : UIButton){
         selectedButton(button.tag)
         if delegate != nil {
             delegate?.tabBarDidselected(self, index: button.tag)
